@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+#define ALPHABET_SIZE 26
+
+void findMaxOccurrence(char arr[], int n) {
+    int count[ALPHABET_SIZE] = {0};
+    for (int i = 0; i < n; i++) {
+        count[arr[i] - 'a']++;
+    }
+    
+    int maxCount = 0;
+    char maxChar = '\0';
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if (count[i] > maxCount) {
+            maxCount = count[i];
+            maxChar = i + 'a';
+        }
+    }
+    
+    if (maxCount == 1) {
+        printf("No Duplicates Present\n");
+    } else {
+        printf("%c %d\n", maxChar, maxCount);
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        char arr[n];
+        for (int i = 0; i < n; i++)
+            scanf(" %c", &arr[i]);
+        findMaxOccurrence(arr, n);
+    }
+    return 0;
+}
