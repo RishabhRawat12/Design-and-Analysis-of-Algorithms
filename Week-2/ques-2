@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, found = 0;
+        scanf("%d", &n);
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &arr[i]);
+        for (int k = n - 1; k >= 0 && !found; k--) {
+            int i = 0, j = k - 1;
+            while (i < j) {
+                int sum = arr[i] + arr[j];
+                if (sum == arr[k]) {
+                    printf("%d %d %d\n", i, j, k);
+                    found = 1;
+                    break;
+                } else if (sum < arr[k])
+                    i++;
+                else
+                    j--;
+            }
+        }
+        if (!found)
+            printf("No sequence found\n");
+    }
+    return 0;
+}
