@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n, key, comparisons = 0, i = 0, step;
+    scanf("%d", &n);
+    int arr[n];
+    for (int j = 0; j < n; j++)
+        scanf("%d", &arr[j]);
+    scanf("%d", &key);
+    step = sqrt(n);
+    while (i < n && arr[i] < key) {
+        comparisons++;
+        i += step;
+    }
+    int start = i - step;
+    if (start < 0)
+        start = 0;
+    for (int j = start; j <= i && j < n; j++) {
+        comparisons++;
+        if (arr[j] == key) {
+            printf("Key found\n");
+            printf("Total comparisons: %d\n", comparisons);
+            return 0;
+        }
+    }
+    printf("Key not found\n");
+    printf("Total comparisons: %d\n", comparisons);
+    return 0;
+}
