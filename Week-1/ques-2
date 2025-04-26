@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n, key, comparisons = 0, left = 0, right, mid, found = 0;
+    scanf("%d", &n);
+    int arr[n];
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+    scanf("%d", &key);
+    right = n - 1;
+    while (left <= right) {
+        comparisons++;
+        mid = left + (right - left) / 2;
+        if (arr[mid] == key) {
+            found = 1;
+            break;
+        } else if (arr[mid] < key)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    if (found)
+        printf("Key found\n");
+    else
+        printf("Key not found\n");
+    printf("Total comparisons: %d\n", comparisons);
+    return 0;
+}
