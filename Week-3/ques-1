@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, comparisons = 0, shifts = 0;
+        scanf("%d", &n);
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &arr[i]);
+        for (int i = 1; i < n; i++) {
+            int key = arr[i], j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                comparisons++;
+                arr[j + 1] = arr[j];
+                shifts++;
+                j--;
+            }
+            if (j >= 0)
+                comparisons++;
+            arr[j + 1] = key;
+            shifts++;
+        }
+        for (int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n%d\n%d\n", comparisons, shifts);
+    }
+    return 0;
+}
