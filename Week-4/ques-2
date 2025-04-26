@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int partition(int arr[], int left, int right, int *comparisons, int *swaps) {
+    int pivotIndex = left + rand() % (right - left + 1);
+    int pivot = arr[pivotIndex];
+    arr[pivotIndex] = arr[right];
+    arr[right] = pivot;
+    int i = left - 1;
+    for (int j = left; j < right; j++) {
+        (*comparisons)++;
+        if (arr[j] < pivot) {
+            i++;
+            if (i != j) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                (*swaps)++;
+            }
+        }
+    }
+    if (i + 1 != right) {
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[right];
+        arr[right] = temp;
+        (*swaps)++;
+    }
+    return i + 1;
+}
+
+void quickSort(int arr[], int left, int right, int *comparisons, int *swaps) {
+    if (left < right) {
+        int pi = partition(arr, left, right, comparisons, swaps);
+        quickSort(arr, left, pi - 1, comparisons, swaps);
+        quickSort(arr, pi + 1, right, comparisons, swaps);
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, comparisons = 0, swaps = 0;
+        scanf("%d", &n);
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &arr[i]);
+        quickSort(arr, 0, n - 1, &comparisons, &swaps);
+        for (int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n%d\n%d\n", comparisons, swaps);
+    }
+    return 0;
+}
