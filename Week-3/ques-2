@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, comparisons = 0, swaps = 0;
+        scanf("%d", &n);
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &arr[i]);
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                comparisons++;
+                if (arr[j] < arr[minIndex])
+                    minIndex = j;
+            }
+            if (minIndex != i) {
+                int temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+                swaps++;
+            }
+        }
+        for (int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n%d\n%d\n", comparisons, swaps);
+    }
+    return 0;
+}
