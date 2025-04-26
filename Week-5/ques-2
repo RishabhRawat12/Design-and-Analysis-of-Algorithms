@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void findPairWithSum(int arr[], int n, int key) {
+    qsort(arr, n, sizeof(int), compare);
+    
+    int left = 0, right = n - 1;
+    while (left < right) {
+        int sum = arr[left] + arr[right];
+        if (sum == key) {
+            printf("%d %d\n", arr[left], arr[right]);
+            return;
+        } else if (sum < key) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    printf("No Such Elements Exist\n");
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int n, key;
+        scanf("%d", &n);
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            scanf("%d", &arr[i]);
+        scanf("%d", &key);
+        findPairWithSum(arr, n, key);
+    }
+    return 0;
+}
