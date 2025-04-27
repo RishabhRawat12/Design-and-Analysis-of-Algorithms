@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class RoadConstruction {
+    int findMinVertex(int[] cost, boolean[] visited, int n) {
+        int minVertex = -1;
+        for (int i = 0; i < n; i++)
+            if (!visited[i] && (minVertex == -1 || cost[i] < cost[minVertex]))
+                minVertex = i;
+        return minVertex;
+    }
+
+    int prims(int[][] graph, int n) {
+        int[] cost = new int[n];
+        boolean[] visited = new boolean[n];
+        Arrays.fill(cost, Integer.MAX_VALUE);
+        cost[0] = 0;
+        int totalCost = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int u = findMinVertex(cost, visited, n);
+            visited[u] = true;
+            totalCost += cost[u];
+            for (int v = 0; v < n; v++)
+                if (graph[u][v] != 0 && !visited[v] && graph[u][v] < cost[v])
+                    cost[v] = graph[u][v];
+        }
+        return totalCost;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] graph = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                graph[i][j] = sc.nextInt();
+        RoadConstruction rc = new RoadConstruction();
+        System.out.println(rc.prims(graph, n));
+    }
+}
