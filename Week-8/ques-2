@@ -1,0 +1,71 @@
+import java.util.*;
+
+public class RoadConstructionKruskal {
+    class Edge implements Comparable<Edge> {
+        int src, dest, weight;
+        Edge(int s, int d, int w) {
+            src = s;
+            dest = d;
+            weight = w;
+        }
+        public int compareTo(Edge e) {
+            return this.weight - e.weight;
+        }
+    }
+
+    int find(int[] parent, int i) {
+        if (parent[i] == i)
+            return i;
+        return find(parent, parent[i]);
+    }
+
+    void union(int[] parent, int[] rank, int x, int y) {
+        int xroot = find(parent, x);
+        int yroot = find(parent, y);
+        if (rank[xroot] < rank[yroot])
+            parent[xroot] = yroot;
+        else if (rank[xroot] > rank[yroot])
+            parent[yroot] = xroot;
+        else {
+            parent[yroot] = xroot;
+            rank[xroot]++;
+        }
+    }
+
+    int kruskal(int[][] graph, int n) {
+        List<Edge> edges = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                if (graph[i][j] != 0)
+                    edges.add(new Edge(i, j, graph[i][j]));
+        Collections.sort(edges);
+        int[] parent = new int[n];
+        int[] rank = new int[n];
+        for (int i = 0; i < n; i++)
+            parent[i] = i;
+        int cost = 0, count = 0;
+        for (Edge e : edges) {
+            int x = find(parent, e.src);
+            int y = find(parent, e.dest);
+            if (x != y) {
+                cost += e.weight;
+                union(parent, rank, x, y);
+                count++;
+                if (count == n - 1)
+                    break;
+            }
+        }
+        return cost;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] graph = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                graph[i][j] = sc.nextInt();
+        RoadConstructionKruskal rc = new RoadConstructionKruskal();
+        System.out.println("Minimum Spanning Weight: " + rc.kruskal(graph, n));
+    }
+}
