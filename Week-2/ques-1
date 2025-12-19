@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 int firstOccurrence(int arr[], int n, int key, int *comparisons) {
     int left = 0, right = n - 1, result = -1;
     while (left <= right) {
@@ -15,7 +14,6 @@ int firstOccurrence(int arr[], int n, int key, int *comparisons) {
     }
     return result;
 }
-
 int lastOccurrence(int arr[], int n, int key, int *comparisons) {
     int left = 0, right = n - 1, result = -1;
     while (left <= right) {
